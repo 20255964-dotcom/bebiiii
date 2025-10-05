@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Composed Love Letter</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif; /* Elegant, romantic font */
+            background: linear-gradient(135deg, #FFE4E1 0%, #FADADD 50%, #FFE4E1 100%); /* Soft pink gradient for romance */
+            color: #4A4A4A; /* Dark gray text for readability */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* Subtle animated rose petals background */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .petal {
+            position: absolute;
+            color: #FF69B4;
+            font-size: 15px;
+            animation: drift 8s ease-in-out infinite;
+        }
+        @keyframes drift {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        header {
+            background-color: #FFF8F8; /* Very light pink */
+            color: #C71585; /* Medium pink */
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
+            border: 1px solid #FFB6C1;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        header::before {
+            content: "💌"; /* Envelope icon */
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .letter-container {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background-color: #FFFFFF; /* White paper-like background */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(199, 21, 133, 0.15); /* Soft pink shadow */
+            border: 2px dashed #FFB6C1; /* Dashed border like a love note */
+            text-align: left;
+            position: relative;
+            animation: unfold 1.5s ease-out;
+        }
+        @keyframes unfold {
+            from { transform: scale(0.8) rotateY(180deg); opacity: 0; }
+            to { transform: scale(1) rotateY(0deg); opacity: 1; }
+        }
+        .letter-content {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-wrap;
+            font-style: italic;
+        }
+        .letter-content h2 {
+            text-align: center;
+            color: #C71585;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-style: normal;
+            color: #C71585;
+            font-weight: bold;
+        }
+        .ps {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888;
+            font-style: normal;
+        }
+        /* Interactive Buttons */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #FFB6C1; /* Light pink buttons */
+            color: #4A4A4A;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(255, 182, 193, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+        }
+        button::before {
+            content: attr(data-icon);
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        button:hover {
+            background-color: #FF69B4; /* Hotter pink on hover */
+            color: white;
+            transform: translateY(-3px) scale(1.05); /* Lift and scale for cuteness */
+            box-shadow: 0 6px 12px rgba(255, 105, 180, 0.4);
+        }
+        button:active {
+            transform: translateY(0) scale(0.98); /* Press effect */
+        }
+        /* Ripple effect on click */
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        button:active::after {
+            width: 200px;
+            height: 200px;
+        }
+        /* Specific button styles */
+        #heartBtn { background-color: #FF69B4; animation: heartbeat 1.5s infinite; }
+        #heartBtn:hover { animation-play-state: paused; }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        #shareBtn { background-color: #FFB6C1; }
+        #printBtn { background-color: #FADADD; }
+        #downloadBtn { background-color: #FFE4E1; }
+        #themeBtn { background-color: #C71585; color: white; }
+        #themeBtn:hover { background-color: #A52A2A; }
+        /* Heart animation on like */
+        .hearts-explosion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            color: #FF69B4;
+            animation: explode 1s ease-out forwards;
+        }
+        @keyframes explode {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+            padding: 10px;
+        }
+        /* Tooltip for buttons */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: #FF69B4;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -70px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #FF69B4 transparent transparent transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated rose petals background -->
+    <div class="petals" id="petals"></div>
+
+    <header>
+        <h1>A letter for my Bebi mwehehe</h1>
+        <p>Pati sa love letter inapply ko codings ko HAHJASHASHJAAHJAHJSAJHAHA 💕</p>
+    </header>
+
+    <div class="letter-container">
+        <div class="letter-content">
+            <h2>My dearest Bebi,</h2>
+
+           Happiest birthday sayo, ahjsshja I know this is not much. But yk your man I'll always do something to make my bebi happy as always. So ayern ahshashjahja di talaga ako natulog kasi ginawa ko tong web HJASHJASHJASHAAHJA panis diba. But anyways, All i wanna say is, I appreciate you Aaliyah. Thank you for this 2 year relationship AND STILL ON THE ROAD HAHASHASHAHA, as in sobrang thank you sa mga nabigay mo, the patience sa attitudes ko, sa episodes ko and all that stuff especially all the times na sobrang down ko't andun ka nakikinig as always and willing to help Kahit sobrang layo mo. I'm proud of you Iyah. Wala akong masabi talaga sa lahat ng nagawa mong bagay saken na nakapag pabago sa mga perspective ko in all the things that I thought I knew better, you also changed me as a man Iyah. I appreciate that so much and I'm so proud of it. I hope every step we take in this relationship is just like a walk in the park wherein we can manage every situations and grow up as a couple. Or should I say, as a family. Kaya to love oki? Sa ngayon eto lang muna kaya kong mabigay ahahahaha. But hey, sooner or later we'll make it okay? As long as we have each other's back. You're the only person I value bebi. You're my family na ahahaha. You enjoy your day oki? Andito lang si lovelove lagi. And as always, stay pretty and sweet, don't change for the worse and all that stuff. You know what to do yea? MWAWAMWAMWAMWAMWA 
+            <span class="signature">Your one and only, Migs </span>
+
+            <div class="ps">P.S. I lied, di talaga ako natulog for the making of this website hehehe i love youuuu</div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <div class="tooltip">
+            <button type="button" id="heartBtn" data-icon="❤️" onclick="likeLetter()">Love This Letter</button>
+            <span class="tooltiptext">Send some love back! 💖</span>
+        </div>
+        <div class="tooltip">
+            <button type="button" id="shareBtn" data-icon="📤" onclick="shareLetter()">Share</button>
+            <span class="tooltiptext">Share with friends or the recipient! 🔗</span>
+        </div>
+        <div class="tooltip">
+            <button type="button" id="printBtn" data-icon="🖨️" onclick="printLetter()">Print</button>
+            <span class="tooltiptext">Print a physical copy! 📄</span>
+        </div>
+        <div class="tooltip">
+            <button type="button" id="downloadBtn" data-icon="💾" onclick="downloadLetter()">Download</button>
+            <span class="tooltiptext">Save as PDF or text! 📥</span>
+        </div>
+        <div class="tooltip">
+            <button type="button" id="themeBtn" data-icon="🎨" onclick="toggleTheme()">Change Theme</button>
+            <span class="tooltiptext">Switch to a new look! ✨</span>
+        </div>
+    </div>
+
+    <footer>
+        <p>I will always love you Iyah. Always!🌸</p>
+    </footer>
+
+    <!-- Hearts explosion container -->
+    <div class="hearts-explosion" id="heartsExplosion"></div>
+
+    <script>
+        // Generate drifting rose petals on load
+        function createPetals() {
+            const petalsContainer = document.getElementById('petals');
+            const petalEmojis = ['🌹', '🌸', '💕'];
+            for (let i = 0; i < 8; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.innerHTML = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = Math.random() * 8 + 's';
+                petalsContainer.appendChild(petal);
+            }
+        }
+        createPetals();
+
+        // Like button: Triggers heart explosion
+        function likeLetter() {
+            createHeartsExplosion();
+            // Optional: Add a counter or animation
+            document.getElementById('heartBtn').innerHTML = '❤️ Loved! (1)';
+        }
+
+        function createHeartsExplosion() {
+            const explosionContainer = document.getElementById('heartsExplosion');
+            explosionContainer.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '💖';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.setProperty('--dx', (Math.random() - 0.5) * 200 + 'px');
+                heart.style.setProperty('--dy', (Math.random() - 0.5) * 200 + 'px');
+                heart.style.animationDelay = Math.random() * 0.5 + 's';
+                explosionContainer.appendChild(heart);
+            }
+            setTimeout(() => { explosionContainer.innerHTML = ''; }, 1000);
+        }
+
+        // Share: Simulate sharing (in real app, integrate social APIs)
+        function shareLetter() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Love Letter',
+                    text: 'Check out this sweet love letter!',
+                    url: window.location.href
+                });
+            } else {
+                alert('Copy the link: ' + window.location.href + '\nShare your heartfelt words! 💌');
+            }
+        }
+
+        // Print the letter
+        function printLetter() {
+            window.print();
+        }
+
+        // Download as text (simulate PDF with text download)
+        function downloadLetter() {
+            const letterText = document.querySelector('.letter-content').textContent;
+            const blob = new Blob([letterText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'love-letter.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Toggle theme (simple dark/light switch for interactivity)
+        let isDark = false;
+        function toggleTheme() {
+            isDark = !isDark;
+            document.body.style.background = isDark 
+                ? 'linear-gradient(135deg, #2C1810 0%, #3D1F0F 50%, #2C1810 100%)' 
+                : 'linear-gradient(135deg, #FFE4E1 0%, #FADADD 50%, #FFE4E1 100%)';
+            document.querySelector('.letter-container').style.backgroundColor = isDark ? '#1A1A1A' : '#FFFFFF';
+            document.querySelector('.letter-content').style.color = isDark ? '#FFB6C1' : '#333';
+            document.querySelector('header').style.backgroundColor = isDark ? '#3D1F0F' : '#FFF8F8';
+            document.querySelector('header').style.color = isDark ? '#FFB6C1' : '#C71585';
+        }
+    </script>
+</body>
+</html>
